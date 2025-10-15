@@ -3,6 +3,10 @@ from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
+import requests
+from django.db.models.signals import post_migrate, post_save
+from .models import InscricaoDesenvolvedor
+
 @receiver(post_migrate)
 def criar_superusuarios(sender, **kwargs):
     """Cria os grupos necessários e os superusuários automaticamente após migrações."""
@@ -52,45 +56,37 @@ def criar_superusuarios(sender, **kwargs):
 
 
 
+# ===================================================================
+# SINAL PARA ENVIAR WEBHOOK AO N8N QUANDO UM NOVO REGISTRO É CRIADO
+# ===================================================================
+@receiver(post_save, sender=InscricaoDesenvolvedor)
+def enviar_webhook_n8n(sender, instance, created, **kwargs):
+    """
+    Este sinal é acionado sempre que uma nova inscrição é salva.
+    """
+    # O webhook só será enviado se um NOVO registro for criado.
+    if created:
+        # **COLOQUE O LINK DO SEU WEBHOOK DO N8N AQUI**
+        webhook_url = "https://SEU_DOMINIO_N8N.com/webhook/SEU_ID_DO_WEBHOOK"
 
+        # Prepara os dados para enviar (em formato JSON)
+        payload = {
+            'nome': instance.nome,
+            'telefone': instance.telefone,
+            'email': instance.email,
+            'unidade_secretaria': instance.unidade_secretaria,
+            'chefia_imediata': instance.chefia_imediata,
+            'linguagem_ferramenta': instance.linguagem_ferramenta,
+            'principal_desafio': instance.principal_desafio,
+            'data_inscricao': instance.data_inscricao.isoformat()
+        }
 
-# from django.db.models.signals import post_migrate
-# from django.dispatch import receiver
-# from django.contrib.auth import get_user_model
-# from django.contrib.auth.models import Group
-
-# @receiver(post_migrate)
-# def criar_superusuarios(sender, **kwargs):
-#     User = get_user_model()
-
-#     try:
-#         # Criar ou obter grupos
-#         grupo_exclusao, _ = Group.objects.get_or_create(name="Grupo de Exclusão")
-#         grupo_edicao, _ = Group.objects.get_or_create(name="Grupo de Edição")
-
-#         # Criar superusuário 'admin' se não existir
-#         if not User.objects.filter(username='admin').exists():
-#             admin_user = User.objects.create_superuser(
-#                 username='admin',
-#                 email='carlos.rodrigues@recife.pe.gov.br',
-#                 password='@Admin123',
-#                 nome_completo='Carlos Eduardo',
-#                 telefone='(81) 98717-2274'
-#             )
-#             admin_user.groups.add(grupo_exclusao, grupo_edicao)
-#             print("✅ Superusuário 'admin' criado e adicionado aos grupos!")
-
-#         # Criar superusuário 'joao' se não existir
-#         if not User.objects.filter(username='joao').exists():
-#             joao_user = User.objects.create_superuser(
-#                 username='João',
-#                 email='joaocarloscosta@recife.pe.gov.br',
-#                 password='112358',
-#                 nome_completo='João Carlos Costa',
-#                 telefone='(81) 98765-0747'
-#             )
-#             joao_user.groups.add(grupo_exclusao, grupo_edicao)
-#             print("✅ Superusuário 'admin' criado e adicionado aos grupos!")
-        
-#     except Exception as e:
-#         print(f"⚠️ Erro ao criar superusuários: {e}")
+        try:
+            # Envia a requisição POST para o n8n
+            response = requests.post(webhook_url, json=payload, timeout=10)
+            # Verifica se a requisição foi bem-sucedida (código 2xx)
+            response.raise_for_status() 
+            print(f"✅ Webhook enviado com sucesso para o n8n para a inscrição: {instance.nome}")
+        except requests.exceptions.RequestException as e:
+            # Em caso de erro, imprime no console do servidor
+            print(f"⚠️ ERRO ao enviar webhook para o n8n: {e}")
