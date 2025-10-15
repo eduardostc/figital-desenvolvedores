@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Usuario, PrimeiroEscalao, RedeTransformacaoDigital
+from .models import Usuario, InscricaoDesenvolvedor # IMPORTAÇÃO CORRIGIDA
 
-# Configuração do modelo de usuário personalizado no Admin
+# Configuração do modelo de usuário personalizado no Admin (Mantido)
 @admin.register(Usuario)
 class UsuarioAdmin(UserAdmin):
     list_display = ['nome_completo', 'email', 'username', 'telefone', 'is_staff', 'is_active']
@@ -15,22 +15,21 @@ class UsuarioAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('nome_completo', 'email', 'username', 'telefone', 'password1', 'password2', 'is_staff', 'is_superuser'),
+            'fields': ('nome_completo', 'email', 'username', 'telefone', 'password', 'is_staff', 'is_superuser'),
         }),
     )
 
-# Melhorando a exibição do modelo 1º Escalão no Admin
-@admin.register(PrimeiroEscalao)
-class PrimeiroEscalaoAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'secretaria', 'cargo', 'email', 'telefone', 'problema_urgente', 'data_publicacao']
-    search_fields = ['nome', 'secretaria', 'cargo']
-    list_filter = ['secretaria', 'data_publicacao']
-    ordering = ['data_publicacao']
-
-# Melhorando a exibição do modelo Rede de Transformação Digital no Admin
-@admin.register(RedeTransformacaoDigital)
-class RedeTransformacaoDigitalAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'secretaria', 'cargo', 'email', 'telefone', 'chefe_imediato', 'problema_urgente', 'data_publicacao']
-    search_fields = ['nome', 'secretaria', 'cargo']
-    list_filter = ['secretaria', 'data_publicacao']
-    ordering = ['data_publicacao']
+# Nova configuração para exibir o modelo de Inscrição de Desenvolvedor no Admin
+@admin.register(InscricaoDesenvolvedor)
+class InscricaoDesenvolvedorAdmin(admin.ModelAdmin):
+    list_display = [
+        'nome', 
+        'unidade_secretaria', 
+        'linguagem_ferramenta', 
+        'email', 
+        'telefone', 
+        'data_inscricao'
+    ]
+    search_fields = ['nome', 'unidade_secretaria', 'linguagem_ferramenta', 'email']
+    list_filter = ['unidade_secretaria', 'data_inscricao']
+    ordering = ['-data_inscricao']

@@ -1,5 +1,5 @@
 from django import forms
-from .models import PrimeiroEscalao, RedeTransformacaoDigital, Usuario
+from .models import InscricaoDesenvolvedor, Usuario
 from django.contrib.auth.forms import UserCreationForm
 
 # Formulário de criação de usuários
@@ -8,76 +8,43 @@ class UsuarioForm(UserCreationForm):
         model = Usuario
         fields = ['email', 'username', 'password1', 'password2']
 
-class PrimeiroEscalaoForm(forms.ModelForm):
+# NOVO FORMULÁRIO PARA CADASTRO DE DESENVOLVEDORES
+class InscricaoDesenvolvedorForm(forms.ModelForm):
     class Meta:
-        model = PrimeiroEscalao
-        # fields = '__all__'
-        fields = [ # Campos editáveis no template
-            'nome',
-            'secretaria',
-            'cargo',
-            'email',
-            'telefone',
-            'problema_urgente',
-        ]
-        widgets = {
-            'telefone': forms.TextInput(attrs={
-                'class': 'form-control mask-telefone',
-                'placeholder': '(00) 00000-0000'
-            }),
-            'problema_urgente': forms.Textarea(attrs={'rows': 3, 'cols': 40, 'placeholder': ''}),
-        }
-        labels = {
-            'nome' : 'Nome:',
-            'secretaria' : 'Secretaria:',
-            'cargo': 'Cargo ou Função:',
-            'email': 'E-mail:',
-            'telefone' : 'Whatsapp:',
-            'cargo': 'Cargo ou Função:',
-            'problema_urgente': 'Qual o principal problema em sua secretaria ou unidade que precisa ser atacado urgentemente?',
-        }
-    #metodo para remover os placeholder
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            field.widget.attrs['placeholder'] = ''
-    
-
-class RedeTransformacaoDigitalForm(forms.ModelForm):
-    class Meta:
-        model = RedeTransformacaoDigital
+        model = InscricaoDesenvolvedor
+        # Lista de todos os campos do modelo que aparecerão no formulário
         fields = [
             'nome',
-            'secretaria',
-            'cargo',
-            'email',
             'telefone',
-            'chefe_imediato',
-            'problema_urgente',
+            'email',
+            'unidade_secretaria',
+            'chefia_imediata',
+            'linguagem_ferramenta',
+            'principal_desafio',
         ]
-        widgets = {
-            'telefone': forms.TextInput(attrs={
-                'class': 'form-control mask-telefone',
-                'placeholder': '(00) 00000-0000'
-            }),
-            'chefe_imediato': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
-            'problema_urgente': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
-        }
+        
+        # Personaliza os textos que aparecem acima de cada campo
         labels = {
-            'nome' : 'Nome:',
-            'secretaria' : 'Secretaria:',
-            'cargo': 'Cargo ou Função:',
+            'nome': 'Nome Completo:',
+            'telefone': 'Telefone (Whatsapp):',
             'email': 'E-mail:',
-            'telefone' : 'Whatsapp:',
-            'cargo': 'Cargo ou Função:',
-            'chefe_imediato': 'Quem é o seu chefe imediato (nome, cargo, fone, email)?',
-            'problema_urgente': 'Qual o principal problema em sua secretaria ou unidade que precisa ser atacado urgentemente?',
+            'unidade_secretaria': 'Unidade ou Secretaria:',
+            'chefia_imediata': 'Nome da sua Chefia Imediata:',
+            'linguagem_ferramenta': 'Principal linguagem ou ferramenta que você utiliza:',
+            'principal_desafio': 'Qual seu principal desafio técnico ou de gestão no trabalho?',
         }
-
-    #metodo para remover os placeholder
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            field.widget.attrs['placeholder'] = ''
-
-
+        
+        # Adiciona atributos HTML para melhorar a experiência do usuário
+        widgets = {
+            'nome': forms.TextInput(attrs={'placeholder': 'Digite seu nome completo'}),
+            'telefone': forms.TextInput(attrs={'placeholder': '(81) 99999-9999',
+            'class': 'mask-telefone'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'seu.email@recife.pe.gov.br'}),
+            'unidade_secretaria': forms.TextInput(attrs={'placeholder': 'Ex: Emprel, Secretaria de Finanças'}),
+            'chefia_imediata': forms.TextInput(attrs={'placeholder': 'Nome do gestor ou líder direto'}),
+            'linguagem_ferramenta': forms.TextInput(attrs={'placeholder': 'Ex: Python, Django, Power BI, JavaScript...'}),
+            'principal_desafio': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Descreva o maior desafio que você enfrenta em seus projetos ou no dia a dia.'
+            }),
+        }

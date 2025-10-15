@@ -1,7 +1,7 @@
 {% extends 'figital/base.html' %}
 {% load static %}  
 
-{% block title %}Página Inicial{% endblock %}
+{% block title %}Jornada da 2º Fase da Transformação Digital{% endblock %}
 
 {% block content %}
     <!-- Barra de navegação fixada no topo com botão de Acesso Restrito alinhado à direita -->
@@ -16,17 +16,14 @@
         <img src="{% static 'images/logo.png' %}" alt="Logo Figital" class="img-fluid w-75">
     </div>
 
-    <!-- Contêiner flexível para organizar os botões -->
+    <!-- Contêiner para o botão de inscrição -->
     <div class="container mt-4">
-        <div class="row">
-            <!-- Botão 1º Escalão -->
-            <div class="col-12 col-md-6 text-start mb-2">
-                <a href="{% url 'primeiro_escalao' %}" class="btn btn-primary btn-lg w-100">1º Escalão</a>
-            </div>
-
-            <!-- Botão Rede de Transformação Digital -->
-            <div class="col-12 col-md-6 text-end mb-2">
-                <a href="{% url 'rede_transformacao' %}" class="btn btn-success btn-lg w-100">Rede de Transformação Digital</a>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <!-- Botão único para o cadastro de desenvolvedores -->
+                <a href="{% url 'inscricao_desenvolvedores' %}" class="btn btn-success btn-lg w-100">
+                    Inscrição - 2ª Fase (Desenvolvedores)
+                </a>
             </div>
         </div>
     </div>

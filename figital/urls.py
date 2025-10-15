@@ -1,23 +1,25 @@
 from django.urls import path
 from . import views
-from .views import exportar_escalao_excel, exportar_transformacao_excel, excluir_registro_escalao
+from .views import exportar_inscricoes_csv
 
 urlpatterns = [
+    # ==========================================================
+    # URLs Públicas
+    # ==========================================================
     path('', views.index, name='index'),  # Alterado de 'home' para 'index'
-    path('registros/', views.index_autenticado, name='index_autenticado'), 
-    path('primeiro-escalao/', views.primeiro_escalao, name='primeiro_escalao'),
-    path('rede-transformacao/', views.rede_transformacao, name='rede_transformacao'),
     path('login/', views.login_view, name='login'),
-    path('visualizar-escalao/', views.visualizar_escalao, name='visualizar_escalao'),
-    path('visualizar-transformacao/', views.visualizar_transformacao, name='visualizar_transformacao'),
 
-    path('exportar-escalao/', exportar_escalao_excel, name='exportar_escalao'),
-    path('exportar-transformacao/', exportar_transformacao_excel, name='exportar_transformacao'),
+    # URL para o novo formulário de inscrição
+    path('desenvolvedores/', views.inscricao_desenvolvedor, name='inscricao_desenvolvedores'),
 
-    path('excluir-escalao/<int:registro_id>', views.excluir_registro_escalao, name='excluir_registro_escalao'),
-    path('excluir-transformacao/<int:registro_id>', views.excluir_registro_transformacao, name='excluir_registro_transformacao'),
+    # ==========================================================
+    # URLs Protegidas (Área Administrativa)
+    # ==========================================================
+    path('registros/', views.index_autenticado, name='index_autenticado'),
     
-    path('editar-escalao/<int:registro_id>', views.editar_registro_escalao, name='editar_registro_escalao'),
-    path('editar-transformacao/<int:registro_id>', views.editar_registro_transformacao, name='editar_registro_transformacao'),
-    
+    # URLs para gerenciar as inscrições
+    path('registros/visualizar/', views.visualizar_inscricoes, name='visualizar_inscricoes'),
+    path('registros/editar/<int:registro_id>/', views.editar_inscricao, name='editar_inscricao'),
+    path('registros/excluir/<int:registro_id>/', views.excluir_inscricao, name='excluir_inscricao'),
+    path('registros/exportar-csv/', views.exportar_inscricoes_csv, name='exportar_inscricoes_csv'),
 ]

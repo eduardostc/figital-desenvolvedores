@@ -1,0 +1,88 @@
+{% extends 'figital/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Registros - Inscrições de Desenvolvedores{% endblock %}
+
+{% block content %}
+    <!-- Barra de navegação fixada no topo com botão de Voltar e Exportar -->
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid d-flex justify-content-between">
+            <a href="{% url 'exportar_inscricoes_csv' %}" class="btn btn-success">Exportar para CSV</a>
+            <a href="{% url 'index_autenticado' %}" class="btn btn-secondary">Voltar</a>
+        </div>
+    </nav>
+
+    <!-- Contêiner da tabela -->
+    <div class="container mt-5">
+        <h2 class="text-center text-custom-green">Registros - Inscrições de Desenvolvedores</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Unidade/Secretaria</th>
+                        <th scope="col">Linguagem/Ferramenta</th>
+                        <th scope="col">Contato</th>
+                        <th scope="col">Desafio Principal</th>
+                        {% if pertence_grupo_exclusao or pertence_grupo_edicao %}
+                            <th>Ações</th> 
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in registros %}
+                    <tr>
+                        <td class="text-center">{{ registro.id }}</td>
+                        <td>{{ registro.data_inscricao|date:"d/m/Y H:i" }}</td>
+                        <td>{{ registro.nome }}</td>
+                        <td>{{ registro.unidade_secretaria }}</td>
+                        <td>{{ registro.linguagem_ferramenta }}</td>
+                        <td>{{ registro.telefone }}</td>
+                        <td>{{ registro.principal_desafio }}</td>
+                        {% if pertence_grupo_exclusao or pertence_grupo_edicao %}
+                            <td>
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <!-- Botão de Editar -->
+                                    {% if pertence_grupo_edicao %}
+                                        <a href="{% url 'editar_inscricao' registro.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                    {% endif %}
+                                    <!-- Botão de Excluir -->
+                                    {% if pertence_grupo_exclusao %}
+                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ registro.id }}">
+                                            Excluir
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        {% endif %}
+                    </tr>
+
+                    <!-- Modal de Confirmação de Exclusão -->
+                    <div class="modal fade" id="confirmDeleteModal{{ registro.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Excluir o Registro: {{ registro.id }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Tem certeza que deseja excluir a inscrição de <strong>{{ registro.nome }}</strong>?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form method="POST" action="{% url 'excluir_inscricao' registro.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

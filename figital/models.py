@@ -51,31 +51,19 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-# Classe Base para Formulários
-class BaseFormulario(models.Model):    
-    nome = models.CharField(max_length=200)
-    secretaria = models.CharField(max_length=200)
-    cargo = models.CharField(max_length=200)
-    email = models.EmailField()
-    telefone = models.CharField(max_length=15) 
-    problema_urgente = models.TextField()
-    data_publicacao = models.DateTimeField(auto_now_add=True)
+class InscricaoDesenvolvedor(models.Model):
+    nome = models.CharField(verbose_name="Nome Completo", max_length=200)
+    telefone = models.CharField(verbose_name="Telefone", max_length=20)
+    email = models.EmailField(verbose_name="E-mail")
+    unidade_secretaria = models.CharField(verbose_name="Unidade/Secretaria", max_length=200)
+    chefia_imediata = models.CharField(verbose_name="Chefia Imediata", max_length=200)
+    linguagem_ferramenta = models.CharField(verbose_name="Linguagem ou ferramenta que trabalha", max_length=255)
+    principal_desafio = models.TextField(verbose_name="Principal desafio enfrentado nos projetos/trabalho")
+    data_inscricao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nome
 
     class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.nome  # Retornando o nome como representação do objeto
-
-# Modelo para 1º Escalão
-class PrimeiroEscalao(BaseFormulario):
-    def __str__(self):
-        return f"1º Escalão - {self.nome}"  # Adiciona contexto ao nome
-
-# Modelo para Rede de Transformação Digital
-class RedeTransformacaoDigital(BaseFormulario):
-    chefe_imediato = models.TextField()
-
-    def __str__(self):
-        return f"Rede de Transformação Digital - {self.nome}"  # Adiciona contexto ao nome
-
+        verbose_name = "Inscrição de Desenvolvedor"
+        verbose_name_plural = "Inscrições de Desenvolvedores"
