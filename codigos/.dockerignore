@@ -1,0 +1,22 @@
+# Ambientes virtuais
+venv/
+env/
+
+# Arquivos de cache do Python
+__pycache__/
+*.pyc
+
+# Metadados de editores e IDEs
+.vscode/
+.idea/
+
+# Banco de dados local (não deve ser copiado para a imagem)
+db.sqlite3
+*.sqlite3
+
+# Arquivos do Git
+.git
+.gitignore
+
+# Arquivos de configuração local
+.env

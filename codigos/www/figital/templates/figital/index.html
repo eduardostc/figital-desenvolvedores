@@ -1,0 +1,30 @@
+{% extends 'figital/base.html' %}
+{% load static %}  
+
+{% block title %}Jornada da 2º Fase da Transformação Digital{% endblock %}
+
+{% block content %}
+    <!-- Barra de navegação fixada no topo com botão de Acesso Restrito alinhado à direita -->
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid d-flex justify-content-end">
+            <a href="{% url 'login' %}" class="btn btn-warning">Área Restrita</a>
+        </div>
+    </nav>
+
+    <!-- Logo ocupando toda a parte superior da página -->
+    <div class="text-center mt-5">
+        <img src="{% static 'images/logo.png' %}" alt="Logo Figital" class="img-fluid w-75">
+    </div>
+
+    <!-- Contêiner para o botão de inscrição -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <!-- Botão único para o cadastro de desenvolvedores -->
+                <a href="{% url 'inscricao_desenvolvedores' %}" class="btn btn-success btn-lg w-100">
+                    Inscrição - 2ª Fase (Desenvolvedores)
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

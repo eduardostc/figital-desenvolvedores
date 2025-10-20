@@ -1,0 +1,38 @@
+Pra que server o whitenoises?
+
+▶ comandos criação do ambiente virtual:
+python -m venv venv
+▶ Comando para entrar no  ambiente virtual (caminho onde encontra o arquivo activate dentro da ambiente virtual):
+. venv/Scripts/activate
+instalação da biblioteca:
+pip django-boots 
+Django==4.2.16
+
+django-admin startproject  core .
+django-admin startapp  lab_figital
+
+configurar settings:
+
+
+allowhost = *
+
+install_apps = [
+	'lab_figital',
+	'django_bootstrap5',
+]
+
+TEMPLATE = [
+	'DIRS': ['templates'],  # Adicione o diretório de templates
+]
+
+LANGUAGE_CODE = 'pt-br'
+
+TIME_ZONE = 'America/Sao_Paulo'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Diretório de arquivos estáticos durante a produção
+_______________________________________________________________
+python manage.py makemigrations figital
+python manage.py migrate
+
+
+1º Escalão> Prefeito, vice, secretários, presidentes e chfes de gabinetes especiais. Preciso criar uma aplicação em django onde vai ter a pagina principal com a logo do Figital. Nessa pagina principal preciso de dois botões ou algo semelhante onde o primeiro será 1º Escalão e o segundo será REDE DE TRANSFORMAÇÃO DIGITAL. Se o cidadão clicar no primeiro botão será redirecionado para o formulário abaixo: Formulário 1º Escalão 1 - Nome Completo campo aberto 2 - Secretaria ou Unidade campo aberto 3 - Cargo ou Função campo aberto 4 - Email do tipo email 5 - Whastapp do tipo fone ou telefone 6 - Qual o principal problema em sua secretaria ou unidade que precisa ser atacado urgentemente? campo aberto Se o usuário clicar no segundo botão será redirecionado para Formulário do REDE DE TRANSFORMAÇÃO DIGITAL abaixo: 1 - Nome Completo campo aberto 2 - Secretaria ou Unidade campo aberto 3 - Cargo ou Função 4 - Email do tipo email 5 - Whatsapp do tipo fone ou telefone 6 - Quem é o seu chefe imediato (nome, cargo, fone, email)? campo aberto 7 - Qual o principal problema em sua secretaria ou unidade que precisa ser atacado urgentemente? campo aberto Também preciso de um outro botão para acesso a area restrita, que quando clicado será solicitado login e senha. Caso seja autenticado será redirecionado para acesso outra pagina que também terar dois botões um para acesso a pagina de visualização dos registro do formulário 1º Escalão e outro botão para acesso ao registro do formulário REDE DE TRANSFORMAÇÃO DIGITAL. ´´´´´ Assim preciso que você me ajude a criar com os passos com os comandos desdo comando do ambiente virtual até o comando de criação do projeto e aplicação e as dependências. E das paginas do meu arquivo models.py, forms.py, urls.py do projeto e urls.py do app; views.py, admin.py já implemntado. 1º Escalão> Prefeito, vice, secretários, presidentes e chfes de gabinetes especiais. Preciso criar uma aplicação em django onde vai ter a pagina principal com a logo do Figital. Nessa pagina principal preciso de dois botões ou algo semelhante onde o primeiro será 1º Escalão e o segundo será REDE DE TRANSFORMAÇÃO DIGITAL. Se o cidadão clicar no primeiro botão será redirecionado para o formulário abaixo: Formulário 1º Escalão 1 - Nome Completo campo aberto 2 - Secretaria ou Unidade campo aberto 3 - Cargo ou Função campo aberto 4 - Email do tipo email 5 - Whastapp do tipo fone ou telefone 6 - Qual o principal problema em sua secretaria ou unidade que precisa ser atacado urgentemente? campo aberto Se o usuário clicar no segundo botão será redirecionado para Formulário do REDE DE TRANSFORMAÇÃO DIGITAL abaixo: 1 - Nome Completo campo aberto 2 - Secretaria ou Unidade campo aberto 3 - Cargo ou Função 4 - Email do tipo email 5 - Whatsapp do tipo fone ou telefone 6 - Quem é o seu chefe imediato (nome, cargo, fone, email)? campo aberto 7 - Qual o principal problema em sua secretaria ou unidade que precisa ser atacado urgentemente? campo aberto Também preciso de um outro botão para acesso a area restrita, que quando clicado será solicitado login e senha. Caso seja autenticado será redirecionado para acesso outra pagina que também terar dois botões um para acesso a pagina de visualização dos registro do formulário 1º Escalão e outro botão para acesso ao registro do formulário REDE DE TRANSFORMAÇÃO DIGITAL. ´´´´´ Assim preciso que você me ajude a criar com os passos com os comandos desdo comando do ambiente virtual até o comando de criação do projeto e aplicação e as dependências. E das paginas do meu arquivo models.py, forms.py, urls.py do projeto e urls.py do app; views.py, admin.py já implemntado.

@@ -1,0 +1,37 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!-- SEUS SCRIPTS DE MÁSCARA -->
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.mask.min.js' %}"></script>
+<script src="{% static 'js/mascara.js' %}"></script>
+
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>{% block title %}Figital{% endblock %}</title>
+    <meta charset="UTF-8">
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">Figital</a>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="text-center mt-4">
+        <p>&copy; {% now 'Y' %} Figital - Todos os direitos reservados</p>
+    </footer>
+</body>
+</html>

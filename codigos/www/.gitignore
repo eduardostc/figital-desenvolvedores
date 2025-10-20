@@ -1,0 +1,88 @@
+# 🛠️ Ambientes virtuais (evita subir dependências locais)
+venv/
+env/
+.venv/
+
+# 🔑 Arquivos de configuração e variáveis de ambiente (evita expor credenciais)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# 🛑 Banco de dados SQLite (caso esteja usando SQLite no dev, não deve ir para o GitHub)
+*.sqlite3
+*.db
+
+# ⚡ Arquivos de cache do Python (evita lixo desnecessário)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 🏗️ Configurações de IDE (evita arquivos específicos do editor)
+.vscode/
+.idea/
+
+# 📝 Logs e arquivos temporários (evita que logs antigos sejam versionados)
+*.log
+*.tmp
+*.swp
+*.swo
+
+# 🔀 Arquivos de cobertura de testes (se estiver rodando testes, evita poluir o repositório)
+.coverage
+.coveragerc
+htmlcov/
+pytest_cache/
+
+# 🎭 Arquivos de migração do Django (evita subir migrações geradas automaticamente)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# 🌐 Arquivos estáticos gerados pelo Django
+static/
+staticfiles/
+
+# 📂 Pasta de uploads (caso sua aplicação tenha arquivos de usuários, não devem ir para o GitHub)
+media/
+
+# ⚙️ Arquivos do Docker (caso esteja usando Docker na produção)
+docker-compose.override.yml
+*.dockerignore
+
+# 🚀 Outras configurações específicas para deploy em produção
+node_modules/
+dist/
+build/
+
+
+
+# # Ambiente virtual
+# venv/
+# env/
+# .venv/
+
+# # Arquivos de configuração local
+# .env
+# .env.local
+
+# # Arquivos de banco de dados SQLite
+# *.sqlite3
+# *.db
+
+# # Arquivos de cache do Python
+# __pycache__/
+# *.pyc
+# *.pyo
+# *.pyd
+
+# # Arquivos de IDE
+# .vscode/
+# .idea/
+
+# # Arquivos de log e temporários
+# *.log
+# *.tmp
+
+# #arquivo de teste
+# htmlcov/*

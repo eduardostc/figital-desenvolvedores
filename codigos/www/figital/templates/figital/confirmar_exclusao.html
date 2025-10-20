@@ -1,0 +1,44 @@
+{% extends 'figital/base.html' %}
+{% load django_bootstrap5 %}  
+
+{% block title %}Confirmar Exclusão{% endblock %}
+
+{% block content %}
+    <!-- Barra de navegação fixada no topo com botão de Voltar alinhado à direita -->
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid d-flex justify-content-end">
+            <a href="{% url 'visualizar_inscricoes' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </nav>
+
+    <!-- Contêiner da confirmação -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <div class="card text-center border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0">Confirmação de Exclusão</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="fs-5">
+                            Tem certeza de que deseja excluir permanentemente a inscrição de:
+                        </p>
+                        <h3 class="my-3">
+                            <strong>{{ registro.nome }}</strong>
+                        </h3>
+                        <p class="text-muted">
+                            (ID: {{ registro.id }} | Inscrito em: {{ registro.data_inscricao|date:"d/m/Y" }})
+                        </p>
+                        <p class="text-danger fw-bold">Esta ação não pode ser desfeita.</p>
+                        
+                        <form method="POST" action="{% url 'excluir_inscricao' registro.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-lg me-2">Sim, Excluir</button>
+                            <a href="{% url 'visualizar_inscricoes' %}" class="btn btn-secondary btn-lg">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+# docker-compose.yml para o Projeto Figital
+# -----------------------------------------
+version: '3.8'
+
+services:
+  # Nome do serviço
+  app_figital:
+    # Constrói a imagem a partir do Dockerfile no diretório atual (./)
+    build: .
+    # Nome da imagem que será criada após o build
+    image: figital-app
+    # Nome do container quando for executado
+    container_name: figital_container
+    # Reinicia o container automaticamente em caso de falha
+    restart: always
+    # Mapeia a porta 7001 do seu computador para a porta 8000 do container
+    ports:
+      - "7001:8000"
+    
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    # Mapeia volumes para persistir dados entre as execuções do container
+    volumes:
+      # Mapeia o banco de dados. O arquivo no seu PC em './www/db.sqlite3'
+      # será o mesmo que '/app/db.sqlite3' dentro do container.
+      - ./www/db.sqlite3:/app/db.sqlite3
+      # Mapeia a pasta de arquivos estáticos.
+      - ./www/staticfiles:/app/staticfiles

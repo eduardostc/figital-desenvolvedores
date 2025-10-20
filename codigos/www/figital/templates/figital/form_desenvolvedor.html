@@ -1,0 +1,28 @@
+{% extends 'figital/base.html' %}
+{% load django_bootstrap5 %}  
+
+{% block title %}Formulário de Inscrição de Desenvolvedores{% endblock %}
+
+{% block content %}
+    <!-- Barra de navegação fixada no topo com botão de Voltar alinhado à direita -->
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid d-flex justify-content-end">
+            <a href="{% url 'index' %}" class="btn btn-secondary">Voltar</a>
+        </div>
+    </nav>
+
+    <!-- Contêiner do formulário com largura aumentada -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <h2 class="text-center text-custom-green">Cadastro - Jornada de Transformação Digital (Desenvolvedores)</h2>
+                {% bootstrap_messages %}
+                <form method="post" class="p-4 border rounded bg-light">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <button type="submit" class="btn btn-success w-100 mt-3">Enviar Inscrição</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
